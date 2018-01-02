@@ -1,6 +1,7 @@
 const http = require('http');
 const url = require('url');
 const crypto = require('crypto');
+const fs = require('fs');
 
 var headerFields = {
         "cc":"Cache-Control",
@@ -40,7 +41,7 @@ function requestHandler(req, res){
         res.setHeader("Date",new Date(Date.now()).toUTCString());
         
         
-        if(path == "/rsc" || path == "/rsc.css"){
+        if(path == "/rsc" || path == "/rsc.css" || path == "/rsc.png"){
 
                 res.setHeader("X-Forwarded-Header",JSON.stringify(req.headers))
 
@@ -58,7 +59,7 @@ function requestHandler(req, res){
                     return res.end("");
                 }
 
-                if(req.method == "PUT" || req.method == "DELETE"){
+                if(req.method == "PUT" || req.method == "DELETE" || req.method == "PATCH"){
                         res.statusCode = 204;
                         return res.end("");
                 }
@@ -117,25 +118,30 @@ function requestHandler(req, res){
 
         if(accept == "application/json"){
                
-                res.setHeader("Content-Type",accept);
-                var bodyJson = {};
-                bodyJson["Id"]  = id;
-                
-                body = JSON.stringify(bodyJson);
-                //body = '{"Id":"'+id+'"}';
+            res.setHeader("Content-Type",accept);
+            var bodyJson = {};
+            bodyJson["Id"]  = id;
+            
+            body = JSON.stringify(bodyJson);
         }
 
         else if(accept =="application/xml"){
-                res.setHeader("Content-Type",accept);
-                body = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><id>'+id+'</id>';       
+            res.setHeader("Content-Type",accept);
+            body = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><id>'+id+'</id>';       
         }
                 
         else if(accept =="text/css"){
-                res.setHeader("Content-Type",accept);
-                body = 'p{font-family: '+id+'}';
+            res.setHeader("Content-Type",accept);
+            body = 'p{font-family: '+id+'}';
         } 
 
-        else {
+        else if(accept == "image/png"){
+            res.setHeader("Content-Type",accept);
+            body = fs.readFileSync("./das_logo.png");
+
+        }
+
+        else if(accept == "text/plain"){
                 res.setHeader("Content-Type","text/plain");
         }
              
