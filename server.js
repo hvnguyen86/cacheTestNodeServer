@@ -35,6 +35,9 @@ function requestHandler(req, res){
         if(req.headers["x-id"]){
                 id = req.headers["x-id"];
                 res.setHeader("X-Id",id);
+        } else if(req.headers["id"]){
+                id = req.headers["id"]; 
+                res.setHeader("Id",id);
         }
                 
         
