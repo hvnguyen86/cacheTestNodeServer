@@ -16,9 +16,9 @@ var lastModified;
 var timeStamps = {};
 
 function requestHandler(req, res){
-        console.log(req.url);
-        console.log(req.headers);
-        console.log("-----")
+        // console.log(req.url);
+        // console.log(req.headers);
+        // console.log("-----")
 
 
         var responseString = req.headers["x-response-string"] ? req.headers["x-response-string"] : "";
@@ -30,7 +30,7 @@ function requestHandler(req, res){
         var accept = req.headers["accept"];
         var timeStamp = query["ts"];
 
-        
+        console.log(queryParamsResponse);
         
         if(req.headers["x-id"]){
                 id = req.headers["x-id"];
@@ -90,7 +90,6 @@ function requestHandler(req, res){
                         if (key == "exp"){
                                 var expires = new Date(Date.now() + parseInt(queryParamsResponse[key]) * 1000).toUTCString();
                                 res.setHeader("Expires",expires);
-                                res.setHeader("Date",expires);
                         }
 
                         else if (key == "lm"){
@@ -154,6 +153,7 @@ function requestHandler(req, res){
 }
 
 function parseResponseString(responseString){
+    //TODO parsing with spaces
     var responseStringArray = responseString.split(";");
     var responseHeaderFields = {};
     for (var i = 0; i < responseStringArray.length; i++) {
