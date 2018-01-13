@@ -30,7 +30,7 @@ function requestHandler(req, res){
         var accept = req.headers["accept"];
         var timeStamp = query["ts"];
 
-        console.log(queryParamsResponse);
+        //console.log(queryParamsResponse);
         
         if(req.headers["x-id"]){
                 id = req.headers["x-id"];
@@ -48,18 +48,22 @@ function requestHandler(req, res){
 
                 res.setHeader("X-Forwarded-Header",JSON.stringify(req.headers))
 
-                if(queryParamsResponse["st"] >= 500 && queryParamsResponse["st"] <= 505){
-                    res.statusCode = queryParamsResponse["st"];
-                    return res.end("");
-                }
+                // if(queryParamsResponse["st"] >= 500 && queryParamsResponse["st"] <= 505){
+                //     res.statusCode = queryParamsResponse["st"];
+                //     //return res.end("");
+                // }
 
-                else if(queryParamsResponse["st"] == 201 ){
-                    res.statusCode = 201;
-                } 
+                // else if(queryParamsResponse["st"] == 201 ){
+                //     res.statusCode = 201;
+                // } 
 
-                else if(queryParamsResponse["st"] >= 400 && queryParamsResponse["st"] <= 415){
+                // else if(queryParamsResponse["st"] >= 400 && queryParamsResponse["st"] <= 415){
+                //     res.statusCode = queryParamsResponse["st"];
+                //     //return res.end("");
+                // }
+
+                if(queryParamsResponse["st"]){
                     res.statusCode = queryParamsResponse["st"];
-                    return res.end("");
                 }
 
                 if(req.method == "PUT" || req.method == "DELETE" || req.method == "PATCH"){
