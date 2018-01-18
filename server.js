@@ -44,23 +44,9 @@ function requestHandler(req, res){
         res.setHeader("Date",new Date(Date.now()).toUTCString());
         
         
-        if(path == "/rsc" || path == "/rsc.css" || path == "/rsc.png"){
+        if(path == "/rsc" || path == "/rsc.css" || path == "/rsc.png" || path.startWith("/rsc/")){
 
                 res.setHeader("X-Forwarded-Header",JSON.stringify(req.headers))
-
-                // if(queryParamsResponse["st"] >= 500 && queryParamsResponse["st"] <= 505){
-                //     res.statusCode = queryParamsResponse["st"];
-                //     //return res.end("");
-                // }
-
-                // else if(queryParamsResponse["st"] == 201 ){
-                //     res.statusCode = 201;
-                // } 
-
-                // else if(queryParamsResponse["st"] >= 400 && queryParamsResponse["st"] <= 415){
-                //     res.statusCode = queryParamsResponse["st"];
-                //     //return res.end("");
-                // }
 
                 if(queryParamsResponse["st"]){
                     res.statusCode = queryParamsResponse["st"];
@@ -76,7 +62,7 @@ function requestHandler(req, res){
                         return res.end("");
                 }
 
-                if(req.headers["if-none-match"] && req.headers["if-none-match"] == "123"){
+                if(req.headers["if-none-match"] && req.headers["if-none-match"].replace(/\"/g, "") == "123"){
                         res.statusCode = 304;
 
                         return res.end("");
