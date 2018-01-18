@@ -44,7 +44,7 @@ function requestHandler(req, res){
         res.setHeader("Date",new Date(Date.now()).toUTCString());
         
         
-        if(path == "/rsc" || path == "/rsc.css" || path == "/rsc.png" || path.startWith("/rsc/")){
+        if(path == "/rsc" || path == "/rsc.css" || path == "/rsc.png" || path.startsWith("/rsc/")){
 
                 res.setHeader("X-Forwarded-Header",JSON.stringify(req.headers))
 
