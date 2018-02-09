@@ -108,6 +108,7 @@ function requestHandler(req, res){
 
         var body = "Id:"+id;
 
+        // Data Format
         if(accept == "application/json"){
                
             res.setHeader("Content-Type",accept);
@@ -135,6 +136,11 @@ function requestHandler(req, res){
 
         else if(accept == "text/plain"){
                 res.setHeader("Content-Type","text/plain");
+        }
+
+        //Language
+        if(req.headers["accept-language"]){
+            res.setHeader("Content-Language",req.headers["accept-language"]);
         }
              
         return res.end(body);
