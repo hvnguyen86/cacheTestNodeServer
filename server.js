@@ -16,9 +16,9 @@ var lastModified;
 var timeStamps = {};
 
 function requestHandler(req, res){
-        // console.log(req.url);
-        // console.log(req.headers);
-        // console.log("-----")
+        console.log(req.url);
+        console.log(req.headers);
+        console.log("-----")
 
 
         var responseString = req.headers["x-response-string"] ? req.headers["x-response-string"] : "";
@@ -27,8 +27,12 @@ function requestHandler(req, res){
         var queryParamsResponse = parseResponseString(responseString);
         var path = urlObject.pathname;
         var id = "";
-        var accept = req.headers["accept"];
+        var accept = req.headers["accept"] ? req.headers["accept"] : req.headers["x-accept"];
         var timeStamp = query["ts"];
+
+        if(query["sc"]){
+            res.setHeader("Set-Cookie")
+        }
 
         //console.log(queryParamsResponse);
         
@@ -40,7 +44,9 @@ function requestHandler(req, res){
                 res.setHeader("Id",id);
         }
                 
-        
+
+        res.setHeader("Access-Control-Allow-Origin", "*");
+        res.setHeader("Access-Control-Allow-Headers", "x-response-string");
         res.setHeader("Date",new Date(Date.now()).toUTCString());
         
         
@@ -136,6 +142,8 @@ function requestHandler(req, res){
 
         else if(accept == "text/plain"){
                 res.setHeader("Content-Type","text/plain");
+        } else {
+            res.setHeader("Content-Type","text/plain");
         }
 
         //Language
