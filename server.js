@@ -56,7 +56,7 @@ function requestHandler(req, res){
 
                 if(queryParamsResponse["st"]){
                     res.statusCode = queryParamsResponse["st"];
-                    res.setHeader("Location","http://"+req.headers["accept"]);
+                    res.setHeader("Location","http://"+req.headers["host"]);
                 }
 
                 if(req.method == "PUT" || req.method == "DELETE" || req.method == "PATCH"){
