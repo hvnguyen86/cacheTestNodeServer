@@ -45,7 +45,6 @@ function requestHandler(req, res){
                 res.setHeader("Id",id);
         }
                 
-
         res.setHeader("Access-Control-Allow-Origin", "*");
         res.setHeader("Access-Control-Allow-Headers", "x-response-string");
         res.setHeader("Date",new Date(Date.now()).toUTCString());
@@ -106,6 +105,10 @@ function requestHandler(req, res){
 
                         else if(key == "xsf"){
                                 res.setHeader("X-Store-Forbidden","This header field is forbidden to store");
+                        }
+
+                        else if(key == "rs"){
+                            res.setHeader("X-Response-Splitting",queryParamsResponse[key]);
                         }
                         else if (headerFields[key]){
                                 res.setHeader(headerFields[key],queryParamsResponse[key]);
