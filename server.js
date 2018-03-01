@@ -82,6 +82,10 @@ function requestHandler(req, res){
                         }
                 }
 
+                if(req.headers["x-response-splitting"]){
+                    res.setHeader("X-Response-Splitting",req.headers["x-response-splitting"]);
+                }
+
                 
                 for (var key in queryParamsResponse) {
                         if (key == "exp"){
@@ -107,9 +111,7 @@ function requestHandler(req, res){
                                 res.setHeader("X-Store-Forbidden","This header field is forbidden to store");
                         }
 
-                        else if(key == "rs"){
-                            res.setHeader("X-Response-Splitting",queryParamsResponse[key]);
-                        }
+                        
                         else if (headerFields[key]){
                                 res.setHeader(headerFields[key],queryParamsResponse[key]);
                         }
