@@ -16,10 +16,9 @@ var lastModified;
 var timeStamps = {};
 
 function requestHandler(req, res){
-        console.log(req.url);
-        console.log(req.headers);
-        console.log("-----")
-
+        // console.log(req.url);
+        // console.log(req.headers);
+        // console.log("-----")
 
         var responseString = req.headers["x-response-string"] ? req.headers["x-response-string"] : "";
         var urlObject = url.parse(req.url,true);
@@ -30,6 +29,8 @@ function requestHandler(req, res){
         var accept = req.headers["accept"] ? req.headers["accept"] : req.headers["x-accept"];
         var timeStamp = query["ts"];
 
+        res.setHeader("X-Client-IP", req.connection.remoteAddress)
+        
         if(query["sc"]){
             res.setHeader("Set-Cookie")
         }
