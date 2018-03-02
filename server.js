@@ -54,9 +54,14 @@ function requestHandler(req, res){
 
                 res.setHeader("X-Forwarded-Header",JSON.stringify(req.headers))
 
-                if(queryParamsResponse["st"]){
+                if(queryParamsResponse["st"] == "300" || queryParamsResponse["st"] == "301" || queryParamsResponse["st"] == "302" || queryParamsResponse["st"] == "303" || queryParamsResponse["st"] == "305" || queryParamsResponse["st"] == "307" || queryParamsResponse["st"] == "306" ){
                     res.statusCode = queryParamsResponse["st"];
                     res.setHeader("Location","http://"+req.headers["host"]);
+                }
+
+                if(queryParamsResponse["st"] == "500" || queryParamsResponse["st"] == "400"){
+                    res.statusCode = queryParamsResponse["st"];
+                    return res.end("");
                 }
 
                 if(req.method == "PUT" || req.method == "DELETE" || req.method == "PATCH"){
